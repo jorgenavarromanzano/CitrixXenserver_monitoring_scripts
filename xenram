@@ -1,0 +1,3 @@
+xenram=`xe host-compute-free-memory host=$1`
+xenramgb=$((xenram / 1024 / 1024 / 1024))
+echo Return: $xenramgb
