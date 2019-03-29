@@ -1,0 +1,12 @@
+TOTAL=0
+
+VALUERX=$(xe host-data-source-query host=$1 data-source=pif_aggr_rx | cut -d "." -f 1)
+echo "VALUERX $VALUERX"
+VALUETX=$(xe host-data-source-query host=$1 data-source=pif_aggr_tx  | cut -d "." -f 1)
+echo "VALUETX $VALUETX"
+TOTAL=$( echo $VALUERX + $VALUETX |bc )
+echo "TOTAL $TOTAL"
+
+TOTALMB=$((TOTAL / 1024 / 1024))
+
+echo Return: $TOTALMB
