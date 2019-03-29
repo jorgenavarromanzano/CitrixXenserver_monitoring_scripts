@@ -1,0 +1,16 @@
+TOTAL=0
+for i in  $(xe sr-list host='<shared>' params=uuid | awk '{print $5}' |egrep -v "^$"|cut -d \- -f 1)
+do
+# echo  xe host-data-source-query host=$1 data-source=io_throughput_total_$i
+  if xe host-data-source-query host=$1 data-source=io_throughput_total_$i > /dev/null 2>&1
+  then
+#       echo "PARTIAL before value  => $TOTAL"
+        VALUE=$(xe host-data-source-query host=$1 data-source=io_throughput_total_$i)
+#       echo "value $VALUE"
+        TOTAL=$( echo $TOTAL + $VALUE |bc   )
+#       echo "PARTIAL + value => $TOTAL"
+
+  fi
+done
+TOTALFLOAT="$( echo ${TOTAL} |awk '{ printf("%f",$TOTAL) }' ) "
+echo Return: $TOTALFLOAT
