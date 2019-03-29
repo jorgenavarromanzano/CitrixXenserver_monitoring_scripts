@@ -1,2 +1,0 @@
-xendiskusage=`xe host-data-source-query host=$1 data-source=io_throughput_total_$2`
-echo Return: $xendiskusage
