@@ -1,0 +1,31 @@
+#ip link set dev eth4 down
+link=100
+nic=()
+for i in `eval echo {$1..$2}`;
+do
+  nic+=("$( ethtool eth$i | grep 'Link detected: no' )")
+  if [[ ${nic[$i]} == *"no"* ]]
+  then
+    link=0
+  fi
+done
+if [[ $link == 0 ]]
+then
+  if [[ ${nic[4]} == *"no"* ]] && [[ ${nic[5]} == *"no"* ]]
+  then
+    echo Return: 45
+  fi
+  if [[ ${nic[6]} == *"no"* ]] && [[ ${nic[7]} == *"no"* ]]
+  then
+    echo Return: 67
+  fi
+  if [[ ${nic[0]} == *"no"* ]] && [[ ${nic[1]} == *"no"* ]]
+  then
+    echo Return: 01
+  fi
+  if [[ ${nic[2]} == *"no"* ]] && [[ ${nic[3]} == *"no"* ]]
+  then
+    echo Return: 23
+  fi
+fi
+echo Return: $link
