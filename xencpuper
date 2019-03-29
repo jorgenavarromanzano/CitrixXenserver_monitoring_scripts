@@ -1,0 +1,5 @@
+xencpu=`xe host-data-source-query host=$1 data-source=cpu_avg`
+per=100
+xencpuper=`echo $xencpu \* $per | bc`
+CPUFLOAT="$( echo ${xencpuper} |awk '{ printf("%f",$xencpuper) }' ) "
+echo Return: $CPUFLOAT
